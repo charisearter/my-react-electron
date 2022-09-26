@@ -24,17 +24,19 @@ const createWindow = () => {
 		mainWindow.show();
 		mainWindow.focus();
 	});
-	// and load the index.html of the app.
-	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
+	// and load the index.html of the app.
+	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+	createWindow();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -58,6 +60,7 @@ app.on('activate', () => {
 
 // Listen for event from renderer
 
+// Say Hello IPC test
 ipcMain.handle('say-hello', (event, args) => {
 	console.log(args);
 

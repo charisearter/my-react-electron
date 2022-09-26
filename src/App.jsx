@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function App() {
-
-  // say Hello test
+	const [title, setTitle] = useState('Change the Title');
+	// say Hello test
 	const clicked = async () => {
 		const result = await myAPI.sayHello('Hello! This is the renderer.');
 		console.log(result);
 	};
 
-  // Renderer --> Main One-way example from IPC Electron docs
+	// set Title
+
+	const changeTitle = e => {
+		setTitle(e.target.value);
+	};
+
+	// Renderer --> Main One-way example from IPC Electron docs
 	return (
 		<div>
 			<h1> Say Hello test</h1>
