@@ -10,20 +10,25 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		show: false,
+		show: false, // don't show window while loading
+		autoHideMenuBar: true, // hide default menu bar
+		resizable: false, // users cannot resize application window
 		width: 800,
-		height: 600,
+		height: 700,
 		webPreferences: {
-			//preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 			preload: path.join(__dirname, 'preload.js'),
 		},
 	});
 
-	// Event listeners on the window
-	mainWindow.webContents.on('did-finish-load', () => {
-		mainWindow.show();
-		mainWindow.focus();
-	});
+	// Show window when finished loading
+	mainWindow.on('ready-to-show', mainWindow.show);
+
+	// Counter test Main --> Renderer
+	let count = 0;
+
+	setInterval(() => {
+		mainWindow.webContents.send('count', count++);
+	}, 1000);
 
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
@@ -66,3 +71,10 @@ ipcMain.handle('say-hello', (event, args) => {
 
 	return `Hello from the main process: The app version is: ${app.getVersion()}.`;
 });
+
+// Message IPC test
+ipcMain.on('message', (event, args) => {
+	console.log(args);
+});
+
+// Counter test Main --> renderer
