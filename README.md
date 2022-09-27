@@ -2,3 +2,4 @@
 Electron communicating with React test
 
 Just getting familiar with Electron with React
+version create-electron-app
