@@ -68,7 +68,7 @@ app.on('activate', () => {
 // Say Hello IPC test
 ipcMain.handle('say-hello', (event, args) => {
 	console.log(args);
-
+// this will be in console window
 	return `Hello from the main process: The app version is: ${app.getVersion()}.`;
 });
 
@@ -77,4 +77,4 @@ ipcMain.on('message', (event, args) => {
 	console.log(args);
 });
 
-// Counter test Main --> renderer
+
